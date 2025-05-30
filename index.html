@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تتبع العادات البسيط</title>
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src https://fonts.gstatic.com;
+    ">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>تتبع عاداتي</h1> <div class="input-section">
+            <input type="text" id="habitInput" placeholder="أدخل عادة جديدة..."> <button id="addHabitBtn">إضافة عادة</button> </div>
+
+        <ul class="habits-list" id="habitsList">
+            </ul>
+        <p id="emptyState" class="empty-state hidden">لا توجد عادات حاليًا. ابدأ بإضافة عادة جديدة!</p>
+        <div id="customMessageBox" class="message-box hidden"></div>
+    </div>
+
+    <div id="confirmationModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <p id="modalMessage">هل أنت متأكد أنك تريد حذف هذه العادة؟</p>
+            <div class="modal-buttons">
+                <button id="confirmDeleteBtn" class="confirm-btn">حذف</button> <button id="cancelDeleteBtn" class="cancel-btn">إلغاء</button> </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
