@@ -3,16 +3,20 @@ const habitInput = document.getElementById('habitInput');
 const addHabitBtn = document.getElementById('addHabitBtn');
 const habitsList = document.getElementById('habitsList');
 const emptyState = document.getElementById('emptyState');
-const customMessageBox = document.getElementById('customMessageBox'); // Reference to the custom message box
+const customMessageBox = document.getElementById('customMessageBox');
 
 const confirmationModal = document.getElementById('confirmationModal');
 const modalMessage = document.getElementById('modalMessage');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
+// Progress Bar Elements
+const progressBarFill = document.getElementById('progressBarFill');
+const progressText = document.getElementById('progressText');
+
 // Load habits from Local Storage or initialize an empty array
 let habits = JSON.parse(localStorage.getItem('habits')) || [];
-let resolveConfirmation; // Variable to store the resolve function of the confirmation promise
+let resolveConfirmation;
 let editingIndex = -1; // To keep track of which habit is being edited (-1 means no edit in progress)
 
 /**
@@ -48,7 +52,7 @@ function renderHabits() {
             completeBtn.textContent = habit.completed ? '✅' : '✔️';
             actionsDiv.appendChild(completeBtn);
 
-            // Edit Button (New)
+            // Edit Button
             const editBtn = document.createElement('button');
             editBtn.classList.add('edit-btn');
             editBtn.dataset.index = index;
@@ -69,6 +73,7 @@ function renderHabits() {
         });
     }
     saveHabits(); // Always save habits to Local Storage after rendering changes
+    updateProgressBar(); // Update progress bar after rendering habits
 }
 
 /**
@@ -76,6 +81,7 @@ function renderHabits() {
  * Validates input and then calls renderHabits to update the UI.
  */
 function addOrUpdateHabit() {
+    console.log("Add/Update Habit button clicked!"); // Debugging log
     const habitName = habitInput.value.trim(); // Get and trim the input value
     if (!habitName) { // Check if input is empty
         showMessage('الرجاء إدخال اسم العادة!', 'error'); // Please enter a habit name!
@@ -92,7 +98,7 @@ function addOrUpdateHabit() {
         showMessage('تمت إضافة العادة بنجاح!', 'info'); // Habit added successfully!
     }
     habitInput.value = ''; // Clear the input field
-    renderHabits(); // Re-render the list
+    renderHabits(); // Re-render the list (which calls updateProgressBar)
 }
 
 /**
@@ -113,7 +119,7 @@ function editHabit(index) {
  */
 function toggleComplete(index) {
     habits[index].completed = !habits[index].completed;
-    renderHabits(); // Re-render to update UI
+    renderHabits(); // Re-render to update UI (which calls updateProgressBar)
     if (habits[index].completed) {
         showMessage('تم إكمال العادة!', 'info'); // Habit completed!
     } else {
@@ -130,7 +136,7 @@ async function deleteHabit(index) {
     const confirmed = await showConfirmationModal('هل أنت متأكد أنك تريد حذف هذه العادة؟'); // Are you sure you want to delete this habit?
     if (confirmed) {
         habits.splice(index, 1); // Remove habit from array
-        renderHabits(); // Re-render the list
+        renderHabits(); // Re-render the list (which calls updateProgressBar)
         showMessage('تم حذف العادة بنجاح!', 'info'); // Habit deleted successfully!
     }
 }
@@ -185,6 +191,22 @@ function hideConfirmationModal(result) {
     }
 }
 
+/**
+ * Calculates and updates the progress bar based on completed habits.
+ */
+function updateProgressBar() {
+    const totalHabits = habits.length;
+    const completedHabits = habits.filter(habit => habit.completed).length;
+
+    let percentage = 0;
+    if (totalHabits > 0) {
+        percentage = (completedHabits / totalHabits) * 100;
+    }
+
+    progressBarFill.style.width = `${percentage}%`;
+    progressText.textContent = `${Math.round(percentage)}% (${completedHabits}/${totalHabits})`;
+}
+
 // --- Event Listeners ---
 
 // Add habit when 'Add Habit' button is clicked
@@ -205,12 +227,16 @@ habitsList.addEventListener('click', (e) => {
 
     if (target.classList.contains('complete-btn')) {
         toggleComplete(parseInt(index)); // Convert index to integer
-    } else if (target.classList.contains('edit-btn')) { // Handle edit button click
+    } else if (target.classList.contains('edit-btn')) {
         editHabit(parseInt(index)); // Convert index to integer
     } else if (target.classList.contains('delete-btn')) {
         deleteHabit(parseInt(index)); // Convert index to integer
     }
 });
 
-// Initial render when the page loads to display existing habits
+// Event listeners for the confirmation modal buttons
+confirmDeleteBtn.addEventListener('click', () => hideConfirmationModal(true));
+cancelDeleteBtn.addEventListener('click', () => hideConfirmationModal(false));
+
+// Initial render when the page loads to display existing habits and update progress bar
 document.addEventListener('DOMContentLoaded', renderHabits);
