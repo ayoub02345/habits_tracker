@@ -77,7 +77,7 @@ h1 {
     margin: 0;
 }
 
-/* Individual habit item styling */
+
 .habit-item {
     display: flex;
     justify-content: space-between; /* Space out content and buttons */
@@ -101,7 +101,7 @@ h1 {
     box-shadow: 0 4px 8px rgba(34, 197, 94, 0.1); /* Green shadow */
 }
 
-/* Span for habit name to take available space */
+
 .habit-item span {
     flex-grow: 1;
     padding-left: 15px; /* Space for the buttons on the left */
