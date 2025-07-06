@@ -1,0 +1,302 @@
+/* Basic styles for the body and overall layout */
+body {
+    font-family: 'Cairo', sans-serif; /* Use Cairo font for Arabic */
+    background-color: #f0f2f5; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #333; /* Dark gray text color */
+}
+
+/* Container for the app content */
+.container {
+    background-color: #ffffff; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 30px;
+    max-width: 500px; /* Max width for better readability */
+    width: 100%; /* Full width on smaller screens */
+    text-align: center;
+    direction: rtl; /* Right-to-left direction for Arabic content */
+    position: relative; /* Needed for absolute positioning of message box */
+}
+
+/* Heading style */
+h1 {
+    color: #4F46E5; /* Indigo 600 - vibrant blue */
+    margin-bottom: 25px;
+    font-weight: 700; /* Bold font weight */
+    font-size: 2.2em; /* Larger font size */
+}
+
+/* Input section styling */
+.input-section {
+    display: flex;
+    gap: 10px; /* Space between input and button */
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center; /* Center items when wrapped */
+}
+
+/* Text input field styling */
+.input-section input[type="text"] {
+    flex-grow: 1; /* Allow input to grow */
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1em;
+    text-align: right; /* Align text to the right for Arabic */
+    min-width: 200px; /* Minimum width for input */
+}
+
+/* Add Habit button styling */
+.input-section button {
+    background-color: #4F46E5; /* Indigo 600 */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer; /* Pointer on hover */
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+.input-section button:hover {
+    background-color: #4338CA; /* Darker indigo on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Habits list styling */
+.habits-list {
+    list-style: none; /* Remove default list bullets */
+    padding: 0;
+    margin: 0;
+}
+
+
+.habit-item {
+    display: flex;
+    justify-content: space-between; /* Space out content and buttons */
+    align-items: center;
+    background-color: #f9f9f9; /* Light background for items */
+    border: 1px solid #eee; /* Light border */
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    text-align: right; /* Align text to the right for Arabic */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Style for completed habits */
+.habit-item.completed {
+    background-color: #dcfce7; /* Green 100 */
+    border-color: #86efac; /* Green 300 */
+    text-decoration: line-through; /* Strikethrough for completed habits */
+    color: #16a34a; /* Darker green text */
+    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.1); /* Green shadow */
+}
+
+
+.habit-item span {
+    flex-grow: 1;
+    padding-left: 15px; /* Space for the buttons on the left */
+}
+
+/* Action buttons container */
+.habit-item .actions {
+    display: flex;
+    gap: 8px; /* Space between action buttons */
+}
+
+/* Style for action buttons (complete/delete/edit) */
+.habit-item .actions button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.habit-item .actions button:hover {
+    transform: scale(1.1); /* Enlarge on hover */
+}
+
+/* Specific colors for complete, edit, and delete buttons */
+.habit-item .actions .complete-btn {
+    color: #22C55E; /* Green 500 */
+}
+.habit-item.completed .actions .complete-btn {
+    color: #6B7280; /* Gray 500 - completed habit can't be completed again */
+    cursor: not-allowed; /* Indicate it's not clickable */
+}
+.habit-item .actions .edit-btn { /* New style for edit button */
+    color: #FBBF24; /* Amber 400 */
+}
+.habit-item .actions .delete-btn {
+    color: #EF4444; /* Red 500 */
+}
+
+/* Empty state message */
+.empty-state {
+    font-size: 1.1em;
+    color: #6B7280; /* Gray text */
+    margin-top: 30px;
+}
+.hidden {
+    display: none; /* Utility class to hide elements */
+}
+
+/* Custom Message Box */
+.message-box {
+    position: absolute;
+    top: 20px; /* Position at the top of the container */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    z-index: 1000; /* Ensure it's on top */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+.message-box.show {
+    opacity: 1;
+}
+.message-box.info {
+    background-color: #e0f2fe; /* Light blue */
+    border: 1px solid #38bdf8; /* Blue 400 */
+    color: #0c4a6e; /* Blue 900 */
+}
+.message-box.error {
+    background-color: #fee2e2; /* Red 100 */
+    border: 1px solid #ef4444; /* Red 500 */
+    color: #991b1b; /* Red 900 */
+}
+
+/* Confirmation Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Higher z-index than message box */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%; /* Make modal content responsive */
+    text-align: center;
+    direction: rtl;
+}
+.modal-content p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    color: #4B5563; /* Gray 700 */
+}
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.modal-buttons .confirm-btn {
+    background-color: #EF4444; /* Red 500 */
+    color: white;
+}
+.modal-buttons .confirm-btn:hover {
+    background-color: #DC2626; /* Red 600 */
+    transform: translateY(-1px);
+}
+.modal-buttons .cancel-btn {
+    background-color: #E5E7EB; /* Gray 200 */
+    color: #374151; /* Gray 700 */
+}
+.modal-buttons .cancel-btn:hover {
+    background-color: #D1D5DB; /* Gray 300 */
+    transform: translateY(-1px);
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* For screens smaller than 600px (e.g., most mobile phones) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px; /* Reduce overall padding */
+    }
+    .container {
+        padding: 20px; /* Reduce container padding */
+    }
+    h1 {
+        font-size: 1.8em; /* Slightly smaller heading */
+        margin-bottom: 20px;
+    }
+    .input-section {
+        flex-direction: column; /* Stack input and button vertically */
+        align-items: stretch; /* Stretch items to full width */
+    }
+    .input-section input[type="text"],
+    .input-section button {
+        width: 100%; /* Full width for input and button */
+        min-width: unset; /* Remove min-width constraint */
+    }
+    .habit-item {
+        flex-direction: column; /* Stack habit name and buttons vertically */
+        align-items: flex-end; /* Align content to the right */
+        padding: 12px 15px;
+    }
+    .habit-item span {
+        width: 100%; /* Full width for habit name */
+        padding-left: 0; /* Remove left padding */
+        margin-bottom: 10px; /* Space between name and buttons */
+    }
+    .habit-item .actions {
+        width: 100%; /* Full width for action buttons */
+        justify-content: flex-end; /* Align buttons to the right */
+    }
+    .message-box {
+        top: 10px; /* Adjust position for smaller screens */
+        padding: 10px 15px;
+        font-size: 0.85em;
+        white-space: normal; /* Allow text wrapping */
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-buttons {
+        flex-direction: column; /* Stack modal buttons vertically */
+        gap: 10px;
+    }
+    .modal-buttons button {
+        width: 100%;
+    }
+}

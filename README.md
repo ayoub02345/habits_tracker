@@ -1,5 +1,21 @@
 # habits_tracker
-A SIMPLE WEBSITE THAT ENABLES YOU TO TRACK YOUR DAILY HABITS AND APPLY CRUD(CREATE,READ,UPDATE,DELETE) FUNCTIONS ON THEM .
+
+=======
+
+A simple application to help users track and improve their daily habits.
+
+<img width="954" alt="habbits-tracker-homepage" src="https://github.com/user-attachments/assets/87d68974-65ef-4715-ba32-5264bd6247de" />
 
 
-<img width="954" alt="image" src="https://github.com/user-attachments/assets/3f4ffefb-4bad-4616-b284-3fd9b41824aa" />
+## Features
+- Add, edit, and delete habits
+- Track daily progress
+
+
+## Getting Started
+
+- Clone the repository:
+   
+   git clone https://github.com/ayoub02345/habits_tracker.git
+   
+>>>>>>> master
